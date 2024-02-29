@@ -1,6 +1,7 @@
 import z from 'zod';
 
 import { Author } from "../entities/author";
+import authorsRepository from '../repositories/author.repository';
 
 const authorSchema = z.object({
     name: z.string().trim().min(3, 'Por favor, informe o nome do autor'),
@@ -45,6 +46,8 @@ export function createAuthor(data: CreateAuthorInput): CreateAuthorOutput {
         ...result.data,
         createdAt: new Date(),
     };
+
+    authorsRepository.save(newAuthor);
     
     return {
         success: true,
