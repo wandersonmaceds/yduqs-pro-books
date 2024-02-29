@@ -16,3 +16,20 @@ import { listAuthors } from "../../src/use-cases/list-authors";
     console.log('repositorio com autor cadastrado', authors);
 })();
 
+(() => {
+    createAuthor({
+        name: 'Flavio Marques',
+        email: 'flavio@mail.com',
+        bio: 'Flávio é especialista em front-end desde 1990',
+    });
+
+    createAuthor({
+        name: 'Flavio Marques',
+        email: 'flavio@mail.com',
+        bio: 'Flávio é especialista em front-end desde 1990',
+    });
+    
+    const authors = listAuthors();
+    console.log('repositorio com autor cadastrado', authors);
+})();
+

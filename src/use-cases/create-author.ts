@@ -5,7 +5,10 @@ import authorsRepository from '../repositories/author.repository';
 
 const authorSchema = z.object({
     name: z.string().trim().min(3, 'Por favor, informe o nome do autor'),
-    email: z.string().email('Por favor, informe um e-mail válido'),
+    email: z.string().email('Por favor, informe um e-mail válido')
+        .refine((email) => authorsRepository.existsWithEmail(email), {
+            message: 'Já existe autor cadastrado com o e-mail informado',
+        }),
     bio: z.string().min(10).max(500),
 });
 
