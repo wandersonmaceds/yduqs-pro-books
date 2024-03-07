@@ -1,7 +1,8 @@
 import { z } from "zod";
 import { Book } from "../entities/Book";
 
-import authorRepository from '../repositories/author.repository'
+import authorRepository from '../repositories/author.repository';
+import bookRepository from '../repositories/book.repository';
 import { ValidationError } from "../types";
 
 type CreateBookInput = {
@@ -58,6 +59,8 @@ export function createBook(data: CreateBookInput): CreateBookOutput {
         ...restBook,
         author,
     };
+
+    bookRepository.save(book);
 
     return {
         success: true, 
