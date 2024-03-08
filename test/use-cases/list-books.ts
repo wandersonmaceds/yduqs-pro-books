@@ -2,6 +2,7 @@ import { add, sub } from "date-fns";
 import { createBook } from "../../src/use-cases/create-book"
 import { createAuthor } from "../../src/use-cases/create-author";
 import { listBooks } from "../../src/use-cases/list-books";
+import { createCategory } from "../../src/use-cases/create-category";
 
 (() => {
     const books = listBooks();
@@ -15,9 +16,11 @@ import { listBooks } from "../../src/use-cases/list-books";
         name: 'Lorem Ipsum'
     });
 
+    const { category } = createCategory({ name: 'Programação Reativa' })
+
     createBook({
         title: 'Estruturas de Dados',
-        category: 'Programação',
+        categorySlug: category!.slug,
         except: 'As estruturas de dados são a base para a construção de algoritmos eficientes que possibilitam a construção sistemas computacionais de alta performance. Elas permitem o armazenamento e manipulação de dados e são essenciais para a solução de problemas complexos em diversas áreas em evidência: inteligência artificial, processamento de imagens, ciência de dados, Machine Learning e Engenharia de Software. ',
         isbn: '978-85-5519-338-5',
         pages: 320,

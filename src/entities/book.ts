@@ -1,4 +1,5 @@
 import { Author } from "./author";
+import { Category } from "./category";
 
 export type Book = {
     title: string;
@@ -8,6 +9,6 @@ export type Book = {
     pages: number;
     isbn: string;
     publicationDate: Date;
-    category: string;
+    category: Category;
     author: Author;
 }

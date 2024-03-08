@@ -4,6 +4,7 @@ import { Book } from "../entities/Book";
 import authorRepository from '../repositories/author.repository';
 import bookRepository from '../repositories/book.repository';
 import { ValidationError } from "../types";
+import categoryRepository from "../repositories/category.repository";
 
 type CreateBookInput = {
     title: string;
@@ -13,7 +14,7 @@ type CreateBookInput = {
     pages: number;
     isbn: string;
     publicationDate: Date;
-    category: string;
+    categorySlug: string;
     authorId: string;
 };
 
@@ -31,7 +32,10 @@ const bookSchema = z.object({
     pages: z.number().positive(),
     isbn: z.string().trim(),
     publicationDate: z.date().min(new Date()),
-    category: z.string().trim().min(3),
+    categorySlug: z.string().trim().refine(
+        (slug) => categoryRepository.findBySlug(slug),
+        { message: 'Category not found' }
+    ),
     authorId: z.string().trim().uuid().refine(
         (id) => authorRepository.findByID(id),
         { message: 'Author not found' }
@@ -52,12 +56,14 @@ export function createBook(data: CreateBookInput): CreateBookOutput {
         }
     }
 
-    const { authorId, ...restBook } = result.data;
+    const { authorId, categorySlug,  ...restBook } = result.data;
     const author = authorRepository.findByID(authorId)!;
+    const category = categoryRepository.findBySlug(categorySlug)!
 
     const book: Book = {
         ...restBook,
         author,
+        category,
     };
 
     bookRepository.save(book);
