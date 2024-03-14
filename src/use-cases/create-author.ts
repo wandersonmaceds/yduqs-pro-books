@@ -1,7 +1,9 @@
 import z from 'zod';
+import { randomUUID } from 'node:crypto';
 
 import { Author } from "../entities/author";
 import authorsRepository from '../repositories/author.repository';
+import { ValidationError } from '../types';
 
 const authorSchema = z.object({
     name: z.string().trim().min(3, 'Por favor, informe o nome do autor'),
@@ -18,15 +20,11 @@ type CreateAuthorInput = {
     bio: string;
 };
 
-type Error = {
-    property: string;
-    message: string;
-}
 
 type CreateAuthorOutput = {
     success: boolean;
     author: Author | null;
-    errors: Error[] | null;
+    errors: ValidationError[] | null;
 }
 
 
@@ -47,6 +45,7 @@ export function createAuthor(data: CreateAuthorInput): CreateAuthorOutput {
 
     const newAuthor: Author = {
         ...result.data,
+        id: randomUUID(),
         createdAt: new Date(),
     };
 
