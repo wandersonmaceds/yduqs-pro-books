@@ -53,4 +53,10 @@ export function createCart(token: string) {
         items: [],
         total: 0,
     }
+
+    return {
+        cart,
+        addBook,
+        removeBook,
+    }
 }
