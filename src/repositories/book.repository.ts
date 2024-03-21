@@ -1,16 +1,16 @@
-import { Book } from "../entities/Book";
+import { Book } from '../entities/book';
 
 const books: Book[] = [];
 
 function save(book: Book) {
-    books.push(book);
+  books.push(book);
 }
 
 function listAll(): Book[] {
-    return books;
+  return books;
 }
 
 export default {
-    save,
-    listAll,
-}
+  save,
+  listAll,
+};
