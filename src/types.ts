@@ -1,4 +1,4 @@
 export type ValidationError = {
-    property: string;
-    message: string;
-}
+  property: string;
+  message: string;
+};
